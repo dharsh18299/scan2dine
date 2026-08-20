@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scan2Dine - Smart QR Code Restaurant Ordering System</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: #030712;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+}
+
+.bg-glows {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 20%, rgba(255, 107, 53, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(245, 158, 11, 0.2) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    background-size: 100% 100%, 100% 100%, 32px 32px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.navbar{
+    background: rgba(11, 15, 25, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    color: #ffffff;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo{
+    font-size: 30px;
+    font-weight: 800;
+    color: #ff6b35;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 0 0 25px rgba(255, 107, 53, 0.5);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.navbar a{
+    color: #f1f5f9;
+    text-decoration: none;
+    padding: 9px 18px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.2s ease;
+}
+
+.navbar a:hover{
+    color: #ff6b35;
+    background: rgba(255, 107, 53, 0.15);
+}
+
+.navbar a.admin-badge-link {
+    background: linear-gradient(135deg, #ff6b35 0%, #f59e0b 100%);
+    color: white;
+    box-shadow: 0 4px 18px rgba(255, 107, 53, 0.45);
+}
+
+.navbar a.creator-badge-link {
+    background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+    color: white;
+    box-shadow: 0 4px 18px rgba(139, 92, 246, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.navbar a.creator-badge-link:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 24px rgba(236, 72, 153, 0.55);
+}
+
+.hero{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px 7%;
+    max-width: 1450px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+    gap: 50px;
+    position: relative;
+    z-index: 1;
+}
+
+.left{
+    flex: 1.1;
+}
+
+.sub-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 107, 53, 0.15);
+    border: 1px solid rgba(255, 107, 53, 0.35);
+    color: #ffb495;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50px;
+    margin-bottom: 18px;
+}
+
+.left h1{
+    font-size: 52px;
+    color: #ffffff;
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.5px;
+}
+
+.left h1 span {
+    background: linear-gradient(135deg, #ff6b35 0%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.left h2{
+    margin-top: 12px;
+    color: #fef08a;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.left p{
+    margin-top: 16px;
+    line-height: 1.65;
+    font-size: 17px;
+    color: #cbd5e1;
+    font-weight: 400;
+    max-width: 600px;
+}
+
+.hero-features-list {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.hero-feature-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 8px 14px;
+    border-radius: 10px;
+}
+
+.hero-feature-item i {
+    color: #34d399;
+}
+
+.btn-container {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 16px 34px;
+    font-size: 17px;
+    font-weight: 700;
+    border-radius: 14px;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(16, 185, 129, 0.6);
+}
+
+.right{
+    flex: 0.9;
+    text-align: center;
+    position: relative;
+}
+
+.image-card-wrapper {
+    position: relative;
+    background: rgba(30, 41, 59, 0.7);
+    padding: 15px;
+    border-radius: 28px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.right img{
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 18px;
+    display: block;
+}
+
+.floating-widget {
+    position: absolute;
+    bottom: -22px;
+    left: -20px;
+    background: rgba(11, 15, 25, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 14px 18px;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.floating-widget i {
+    font-size: 26px;
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.2);
+    padding: 12px;
+    border-radius: 12px;
+}
+
+.floating-widget h4 {
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.floating-widget p {
+    font-size: 13px;
+    color: #cbd5e1;
+}
+
+/* Why Choose Us Section */
+.features{
+    background: linear-gradient(180deg, #0b0f19 0%, #111827 100%);
+    padding: 70px 7%;
+    text-align: center;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    box-shadow: 0 -20px 40px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 2;
+    border-top: 2px solid rgba(255, 107, 53, 0.4);
+}
+
+.features-heading-group {
+    max-width: 750px;
+    margin: 0 auto 45px auto;
+}
+
+.features h2{
+    font-size: 38px;
+    background: linear-gradient(135deg, #ff6b35 0%, #fef08a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.features p.section-subtext {
+    color: #cbd5e1;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.cards{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    max-width: 1350px;
+    margin: 0 auto;
+}
+
+.card{
+    background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    padding: 35px 30px;
+    border-radius: 22px;
+    text-align: left;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.35);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, rgba(255, 107, 53, 0.25) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(255, 107, 53, 0.25);
+    border-color: rgba(255, 107, 53, 0.9);
+}
+
+.card-icon-box {
+    width: 62px;
+    height: 62px;
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.25) 0%, rgba(245, 158, 11, 0.25) 100%);
+    color: #ff6b35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    font-size: 26px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 107, 53, 0.4);
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.2);
+}
+
+.card h3{
+    color: #ffffff;
+    font-size: 23px;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.card p{
+    color: #94a3b8;
+    line-height: 1.7;
+    font-size: 15px;
+}
+
+.nav-action-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-feedback-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white !important;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    border: 1px solid rgba(59, 130, 246, 0.6);
+}
+.nav-announcements-btn {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white !important;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+    border: 1px solid rgba(59, 130, 246, 0.6);
+}
+.nav-feedback-btn:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%) !important;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
+}
+
+footer{
+    background: #02040a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 24px;
+    font-size: 15px;
+    font-weight: 500;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    z-index: 2;
+}
+
+footer span {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+@media (max-width: 968px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .left h1 {
+        font-size: 40px;
+    }
+    .left p, .hero-features-list {
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+    }
+    .btn-container {
+        justify-content: center;
+    }
+    .floating-widget {
+        display: none;
+    }
+    .navbar {
+        padding: 15px 20px;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="bg-glows"></div>
+
+<div class="navbar">
+    <div class="logo">
+        <i class="fas fa-utensils"></i> Scan2Dine
+    </div>
+    <div class="nav-links">
+        <a href="/"><i class="fas fa-home me-1"></i> Home</a>
+        <a href="/menu/1"><i class="fas fa-qrcode me-1"></i> Menu</a>
+        <a href="{{ url_for('announcements') }}"><i class="fas fa-bullhorn me-1"></i> Announcements</a>
+        <div class="nav-action-group">
+            <a href="/feedback" class="nav-feedback-btn"><i class="fas fa-comment-alt"></i> Feedback</a>
+        </div>
+        <a href="/creator" class="creator-badge-link"><i class="fas fa-user-astronaut me-1"></i> Meet the Creator</a>
+        <a href="/admin" class="admin-badge-link"><i class="fas fa-lock me-1"></i> Admin Login</a>
+    </div>
+</div>
+
+<div class="hero">
+    <div class="left">
+        <div class="sub-tag">
+            <i class="fas fa-bolt text-warning"></i> Next-Gen Touchless Restaurant Technology Suite
+        </div>
+        <h1>Welcome to <span>Scan2Dine</span></h1>
+        <h2>Scan • Customize • Order • Enjoy Seamlessly</h2>
+        <p>
+            Revolutionize your table service experience instantly. Bypass slow waiting staff queues, explore vivid photographic menus with ingredient details, configure custom recipe add-ons, and track orders live via smartphone without installing any external mobile application.
+        </p>
+
+        <div class="hero-features-list">
+            <div class="hero-feature-item"><i class="fas fa-check-circle"></i> Zero App Download Required</div>
+            <div class="hero-feature-item"><i class="fas fa-check-circle"></i> Instant Table QR Pairing</div>
+            <div class="hero-feature-item"><i class="fas fa-check-circle"></i> Live Kitchen Sync Feed</div>
+            <div class="hero-feature-item"><i class="fas fa-check-circle"></i> Secure Digital Billing</div>
+            <div class="hero-feature-item"><i class="fas fa-check-circle"></i> Multi-language Support</div>
+            <div class="hero-feature-item"><i class="fas fa-check-circle"></i> Real-time Table Status Tracker</div>
+        </div>
+
+        <div class="btn-container">
+            <a class="btn" href="/menu/1">
+                <i class="fas fa-qrcode"></i> View Interactive Demo Menu
+            </a>
+        </div>
+    </div>
+
+    <div class="right">
+        <div class="image-card-wrapper">
+            <img src="{{ url_for('static', filename='images/home.png') }}" alt="Scan2Dine Smart Restaurant System">
+            <div class="floating-widget">
+                <i class="fas fa-smile-beam"></i>
+                <div>
+                    <h4>100% Contactless Dining</h4>
+                    <p>Optimized for ultimate guest retention</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="features">
+    <div class="features-heading-group">
+        <h2>Why Leading Hospitality Brands Choose Scan2Dine</h2>
+        <p class="section-subtext">Engineered carefully to maximize table turnovers, eliminate manual order mistakes, relieve floor pressure on waiters, and deliver delightful consumer experiences.</p>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <div class="card-icon-box">
+                <i class="fas fa-bolt"></i>
+            </div>
+            <h3>Lightning Fast Ordering Experience</h3>
+            <p>Skip prolonged staff queues and paper pamphlets entirely. Guests can browse rich categories, check dietary requirements, specify cooking notes, and place food orders straight from their handheld mobile devices the moment they take their seats.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon-box">
+                <i class="fas fa-sync-alt"></i>
+            </div>
+            <h3>Live Kitchen Synchronization Hub</h3>
+            <p>All client food and beverage requests route instantaneously to central kitchen display monitors. Each order ticket details exact custom spice gradients, allergy warnings, and precise table indicators for smooth multi-station kitchen execution.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon-box">
+                <i class="fas fa-receipt"></i>
+            </div>
+            <h3>Seamless Billing & Management Suite</h3>
+            <p>Maintain complete transparency over cumulative running balances, observe real-time cooking progression steps live on screen, split checks flexibly, and request final table checkouts with a single tap.</p>
+        </div>
+    </div>
+</div>
+
+<footer>
+    &copy; 2026 <span>Scan2Dine QR Ordering System</span>. Empowering Modern Hospitality & Smart Dining Worldwide. All Rights Reserved.
+</footer>
+
+</body>
+
+</html>

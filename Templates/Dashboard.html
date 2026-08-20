@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan2Dine - Premium Admin Dashboard</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-body: #0b0f19;
+            --surface-card: #131b2e;
+            --surface-card-hover: #1b2640;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --radius-xl: 24px;
+            --radius-md: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 50px;
+        }
+
+        /* Bold & Bigger Dynamic Header */
+        .header {
+            background: rgba(19, 27, 46, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 22px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+        }
+
+        .logo-text {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-sub {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            color: #ec4899;
+            font-weight: 800;
+            margin-top: 3px;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #ef4444;
+            color: white;
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1300px;
+            margin: auto;
+            padding: 35px 25px;
+        }
+
+        .welcome-text {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .welcome-text strong {
+            color: #ffffff;
+        }
+
+        /* Top Best-Seller Card */
+        .top-choice-card {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            color: white;
+            border-radius: var(--radius-xl);
+            padding: 35px;
+            margin-bottom: 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(124, 58, 237, 0.25);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .badge-tag {
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(8px);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .top-choice-right {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 18px 30px;
+            border-radius: var(--radius-md);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            padding: 26px;
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+
+        .metric-card.c-blue::before { background: #3b82f6; }
+        .metric-card.c-indigo::before { background: #6366f1; }
+        .metric-card.c-amber::before { background: #f59e0b; }
+        .metric-card.c-emerald::before { background: #10b981; }
+        .metric-card.c-purple::before { background: #a855f7; }
+        .metric-card.c-rose::before { background: #f43f5e; }
+
+        .metric-card:hover {
+            background: var(--surface-card-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .metric-title {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .metric-value.blue { color: #60a5fa; }
+        .metric-value.green { color: #34d399; }
+        .metric-value.orange { color: #fbbf24; }
+        .metric-value.pink { color: #f472b6; }
+        .metric-value.purple { color: #c084fc; }
+
+        /* VIBRANT MULTI-COLOR MANAGEMENT CONTROL CENTER */
+        .controls-section {
+            background: var(--surface-card);
+            border: 1px solid var(--border-color);
+            padding: 40px;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .controls-section h2 {
+            margin: 0;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #ffffff;
+        }
+
+        .controls-badge {
+            background: rgba(236, 72, 153, 0.15);
+            color: #f472b6;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid rgba(236, 72, 153, 0.3);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        /* Unique vibrant color styling per control card */
+        .control-btn {
+            text-decoration: none;
+            padding: 22px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Color Variations */
+        .control-btn.btn-orders {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.05));
+            color: #93c5fd;
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+        .control-btn.btn-menu {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(124, 58, 237, 0.05));
+            color: #c4b5fd;
+            border-color: rgba(139, 92, 246, 0.3);
+        }
+        .control-btn.btn-add {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(8, 145, 178, 0.05));
+            color: #67e8f9;
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        .control-btn.btn-announce {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(217, 119, 6, 0.05));
+            color: #fcd34d;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+        .control-btn.btn-waiter {
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(225, 29, 72, 0.05));
+            color: #fda4af;
+            border-color: rgba(244, 63, 94, 0.3);
+        }
+        .control-btn.btn-sales {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(5, 150, 105, 0.05));
+            color: #6ee7b7;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+        .control-btn.btn-feedback {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(219, 39, 119, 0.05));
+            color: #f472b6;
+            border-color: rgba(236, 72, 153, 0.3);
+        }
+
+        .control-btn-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .control-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .control-arrow {
+            font-size: 18px;
+            opacity: 0.6;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            filter: brightness(1.2);
+        }
+
+        .control-btn:hover .control-arrow {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+
+        @media(max-width: 768px) {
+            .header { padding: 18px 20px; }
+            .top-choice-card { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .top-choice-right { width: 100%; }
+            .controls-section { padding: 25px 20px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="logo-wrapper">
+        <div class="logo-icon">🍔</div>
+        <div>
+            <div class="logo-text">Scan2Dine</div>
+            <div class="logo-sub">Command Center</div>
+        </div>
+    </div>
+
+    <a href="{{ url_for('admin_logout') }}" class="logout-btn">
+        Logout System
+    </a>
+</div>
+
+<div class="container">
+
+    <div class="welcome-text">
+        Welcome back, <strong>Admin</strong>. Here is your operational overview.
+    </div>
+
+    <!-- Top Choice Card -->
+    <div class="top-choice-card">
+        <div>
+            <div class="badge-tag">🔥 TRENDING BEST SELLER</div>
+
+            {% if top_selling %}
+                <h2 style="margin: 0 0 8px 0; font-size: 28px; font-weight: 800;">
+                    {{ top_selling[1] }}
+                </h2>
+                <p style="margin: 0; opacity: 0.9; font-size: 15px; font-weight: 500;">
+                    Category: <strong>{{ top_selling[2] }}</strong> &bull; ₹{{ "%.2f"|format(top_selling[3]|float) }}
+                </p>
+            {% else %}
+                <h2 style="margin: 0 0 8px 0; font-size: 28px; font-weight: 800;">No Orders Registered</h2>
+                <p style="margin: 0; opacity: 0.9; font-size: 15px;">Your #1 star dish will automatically highlight here.</p>
+            {% endif %}
+        </div>
+
+        <div class="top-choice-right">
+            <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 4px; font-weight: 700;">
+                Position #1
+            </div>
+            <div style="font-size: 18px; font-weight: 800;">
+                Top Choice
+            </div>
+        </div>
+    </div>
+
+    <!-- Metrics Grid -->
+    <div class="metrics-grid">
+        <div class="metric-card c-blue">
+            <div class="metric-title">Total Orders</div>
+            <div class="metric-value blue">{{ total_orders }}</div>
+        </div>
+
+        <div class="metric-card c-indigo">
+            <div class="metric-title">Monthly Orders</div>
+            <div class="metric-value" style="color: #818cf8;">{{ monthly_orders }}</div>
+        </div>
+
+        <div class="metric-card c-amber">
+            <div class="metric-title">Pending Orders</div>
+            <div class="metric-value orange">
+                {% if pending_orders is defined and pending_orders is not none and pending_orders != '' %}
+                    {{ pending_orders }}
+                {% else %}
+                    0
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="metric-card c-emerald">
+            <div class="metric-title">Amount Earned</div>
+            <div class="metric-value green">₹{{ "%.2f"|format(amount_earned|float) }}</div>
+        </div>
+
+        <div class="metric-card c-purple">
+            <div class="metric-title">Dishes Served</div>
+            <div class="metric-value purple">{{ dishes_served }}</div>
+        </div>
+
+        <div class="metric-card c-rose">
+            <div class="metric-title">Overall Rating</div>
+            <div class="metric-value pink">
+                ⭐ {{ "%.2f"|format(overall_rating|float) }}
+                <span style="font-size: 14px; color: var(--text-muted); font-weight: 600;">/5</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIBRANT MULTI-COLOR MANAGEMENT CONTROL CENTER -->
+    <div class="controls-section">
+        <div class="controls-header">
+            <h2>⚡ Management Control Panel</h2>
+            <div class="controls-badge">Live Modules</div>
+        </div>
+
+        <div class="controls-grid">
+            <a href="{{ url_for('admin_orders') }}" class="control-btn btn-orders">
+                <div class="control-btn-content">
+                    <div class="control-icon-box">📦</div>
+                    <span>Manage Orders</span>
+                </div>
+                <div class="control-arrow">→</div>
+            </a>
+
+            <a href="{{ url_for('admin_menu') }}" class="control-btn btn-menu">
+                <div class="control-btn-content">
+                    <div class="control-icon-box">🍽️</div>
+                    <span>Manage Menu</span>
+                </div>
+                <div class="control-arrow">→</div>
+            </a>
+
+            <a href="{{ url_for('add_menu') }}" class="control-btn btn-add">
+                <div class="control-btn-content">
+                    <div class="control-icon-box">➕</div>
+                    <span>Add Menu Item</span>
+                </div>
+                <div class="control-arrow">→</div>
+            </a>
+
+            <a href="{{ url_for('manage_announcements') }}" class="control-btn btn-announce">
+                <div class="control-btn-content">
+                    <div class="control-icon-box">📢</div>
+                    <span>Announcements</span>
+                </div>
+                <div class="control-arrow">→</div>
+            </a>
+
+            <a href="{{ url_for('admin_waiter_requests') }}" class="control-btn btn-waiter">
+                <div class="control-btn-content">
+                    <div class="control-icon-box">🔔</div>
+                    <span>Waiter Requests</span>
+                </div>
+                <div class="control-arrow">→</div>
+            </a>
+
+            <a href="{{ url_for('sales_report') }}" class="control-btn btn-sales">
+                <div class="control-btn-content">
+                    <div class="control-icon-box">📊</div>
+                    <span>Sales Report</span>
+                </div>
+                <div class="control-arrow">→</div>
+            </a>
+
+            <a href="{{ url_for('admin_feedback') }}" class="control-btn btn-feedback">
+                <div class="control-btn-content">
+                    <div class="control-icon-box">⭐</div>
+                    <span>View Feedback</span>
+                </div>
+                <div class="control-arrow">→</div>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
