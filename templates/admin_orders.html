@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage All Orders - Admin</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            margin: 0;
+            padding: 20px;
+        }
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .order-card {
+            background-color: #1e293b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-info h3 {
+            margin: 0 0 8px 0;
+            color: #f1f5f9;
+        }
+        .order-info p {
+            margin: 4px 0;
+            color: #94a3b8;
+        }
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-view {
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-view:hover {
+            background-color: #2563eb;
+        }
+        .btn-preparing {
+            background-color: #f59e0b;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-preparing:hover {
+            background-color: #d97706;
+        }
+        .btn-ready {
+            background-color: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-ready:hover {
+            background-color: #059669;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>📦 Manage All Orders</h2>
+
+    {% for order in orders %}
+    <div class="order-card">
+        <div class="order-info">
+            <h3>Order #{{ order[0] }} — Table {{ order[1] }}</h3>
+            <p>Status: <strong style="color: #38bdf8;">{{ order[3] }}</strong></p>
+            <p>Total: ₹{{ order[2] }} | Time: {{ order[4] }}</p>
+        </div>
+        
+        <div class="order-actions">
+            <a href="{{ url_for('admin_orders', order_id=order[0]) }}" class="btn-view">View</a>
+            <a href="{{ url_for('update_order_status', order_id=order[0], status='Preparing') }}" class="btn-preparing">Preparing</a>
+            <a href="{{ url_for('update_order_status', order_id=order[0], status='Ready') }}" class="btn-ready">Ready</a>
+        </div>
+    </div>
+    {% endfor %}
+
+</body>
+</html>

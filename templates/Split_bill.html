@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Split Bill - Scan2Dine</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,.1); }
+        h1 { text-align: center; color: #1e293b; }
+        .total { text-align: center; font-size: 24px; font-weight: bold; margin: 20px 0; color: #16a34a; }
+        label { display: block; margin-top: 15px; font-weight: bold; color: #334155; }
+        input, select { width: 100%; padding: 12px; margin-top: 8px; box-sizing: border-box; border-radius: 8px; border: 1px solid #ccc; }
+        button { width: 100%; margin-top: 25px; padding: 14px; background: #16a34a; color: white; border: none; border-radius: 10px; font-size: 17px; font-weight: bold; cursor: pointer; }
+        button:hover { background: #15803d; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>💰 Split Bill</h1>
+    <div class="total">Total: ₹{{ "%.2f"|format(grand_total) }}[cite: 8]</div>
+    <form method="POST">
+        <label>Number of People</label>
+        <input type="number" name="people" min="2" max="20" value="2" required[cite: 8]>
+        
+        <label>Split Method</label>
+        <select name="split_type">
+            <option value="equal">Split Equally</option>
+            <option value="items">Split by Items</option>
+        </select>
+        
+        <button type="submit">Continue →</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scan2Dine - Customer Orders</title>
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+        body{
+            margin:0;
+            font-family:Arial,Helvetica,sans-serif;
+            background:#f4f4f4;
+            color:#333;
+        }
+        .container{
+            width:92%;
+            max-width:1100px;
+            margin:40px auto;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 5px 18px rgba(0,0,0,.12);
+        }
+        h1{
+            text-align:center;
+            color:#d35400;
+            margin:5px 0 10px;
+        }
+        .subtitle{
+            text-align:center;
+            color:#777;
+            margin-bottom:30px;
+        }
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+        th{
+            background:#d35400;
+            color:white;
+            padding:14px;
+            text-align:center;
+        }
+        td{
+            padding:13px;
+            text-align:center;
+            border-bottom:1px solid #ddd;
+        }
+        tr:hover{
+            background:#fff8f2;
+        }
+        .status{
+            font-weight:bold;
+        }
+        .view{
+            background:#27ae60;
+            color:white;
+            border:none;
+            padding:9px 18px;
+            border-radius:6px;
+            cursor:pointer;
+            font-size:15px;
+        }
+        .view:hover{
+            background:#219150;
+        }
+        .back{
+            display:inline-block;
+            margin-top:25px;
+            background:#e67e22;
+            color:white;
+            padding:11px 22px;
+            border-radius:6px;
+            text-decoration:none;
+        }
+        .back:hover{
+            background:#cf6d17;
+        }
+        .bottom{
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 Customer Orders</h1>
+        <p class="subtitle">Manage and monitor all restaurant orders</p>
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Table No</th>
+                <th>Total Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order[0] }}</td>
+                <td>🪑 {{ order[1] }}</td>
+                <td>₹{{ order[3] }}</td>
+                <td class="status">{{ order[4] }}</td>
+                <td>
+                    <a href="/order_details/{{ order[0] }}">
+                        <button class="view" type="button">View</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div class="bottom">
+            <a class="back" href="/dashboard">← Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

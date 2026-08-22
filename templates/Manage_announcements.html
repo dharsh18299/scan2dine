@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Announcements</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            color: #172033;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #6d28d9, #4f46e5);
+            color: white;
+            padding: 25px 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin-top: 8px;
+            margin-bottom: 18px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .save-btn {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #15803d;
+        }
+
+        .announcement {
+            border-left: 5px solid #6d28d9;
+            background: #f8f7ff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+
+        .announcement h3 {
+            margin: 0 0 8px;
+            color: #5b21b6;
+        }
+
+        .announcement p {
+            margin: 8px 0;
+            white-space: pre-wrap;
+        }
+
+        .date {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .actions {
+            margin-top: 15px;
+        }
+
+        .delete-btn,
+        .toggle-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 6px;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+        }
+
+        .toggle-btn {
+            background: #2563eb;
+        }
+
+        .inactive {
+            opacity: 0.55;
+            border-left-color: #9ca3af;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #4f46e5;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>📢 Manage Announcements</h1>
+    <p>Create announcements that customers can see on the menu.</p>
+</div>
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>➕ Create New Announcement</h2>
+
+        <form method="POST">
+
+            <label>Announcement Title</label>
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Example: Today's Special"
+                required
+            >
+
+            <label>Announcement Message</label>
+
+            <textarea
+                name="message"
+                placeholder="Example: Chicken Biryani available today for ₹180!"
+                required
+            ></textarea>
+
+            <button type="submit" class="save-btn">
+                📢 Publish Announcement
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>📋 Existing Announcements</h2>
+
+        {% if announcements %}
+
+            {% for announcement in announcements %}
+
+                <div class="announcement {% if not announcement[4] %}inactive{% endif %}">
+
+                    <h3>{{ announcement[1] }}</h3>
+
+                    <p>{{ announcement[2] }}</p>
+
+                    <div class="date">
+                        Posted: {{ announcement[3] }}
+                    </div>
+
+                    <div class="actions">
+
+                        <a
+                            class="toggle-btn"
+                            href="{{ url_for('toggle_announcement', id=announcement[0]) }}"
+                        >
+                            {% if announcement[4] %}
+                                Hide
+                            {% else %}
+                                Show
+                            {% endif %}
+                        </a>
+
+                        <a
+                            class="delete-btn"
+                            href="{{ url_for('delete_announcement', id=announcement[0]) }}"
+                            onclick="return confirm('Delete this announcement?');"
+                        >
+                            Delete
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p>No announcements yet.</p>
+
+        {% endif %}
+
+    </div>
+
+    <a class="back" href="{{ url_for('dashboard') }}">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

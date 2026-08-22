@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meet the Creator | Scan2Dine</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:'Plus Jakarta Sans',sans-serif;
+    background:#030712;
+    color:#fff;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+        radial-gradient(circle at 15% 20%,rgba(139,92,246,.24),transparent 35%),
+        radial-gradient(circle at 85% 75%,rgba(236,72,153,.20),transparent 35%),
+        radial-gradient(circle at 50% 100%,rgba(255,107,53,.14),transparent 40%),
+        #030712;
+}
+
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    opacity:.22;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:40px 40px;
+    pointer-events:none;
+}
+
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:10;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 7%;
+    background:rgba(11,15,25,.84);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.logo{
+    color:#ff6b35;
+    font-size:28px;
+    font-weight:800;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-shadow:0 0 25px rgba(255,107,53,.45);
+}
+
+.back{
+    color:#fff;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:50px;
+    background:linear-gradient(135deg,#ff6b35,#f59e0b);
+    font-weight:700;
+    transition:.3s;
+}
+
+.back:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 25px rgba(255,107,53,.4)
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:0 auto;
+}
+
+.hero{
+    min-height:650px;
+    display:grid;
+    grid-template-columns:.9fr 1.1fr;
+    gap:70px;
+    align-items:center;
+    padding:70px 0;
+}
+
+.photo-area{
+    position:relative;
+    display:flex;
+    justify-content:center;
+}
+
+.photo-frame{
+    width:min(390px,90vw);
+    height:470px;
+    padding:10px;
+    border-radius:38px;
+    background:linear-gradient(145deg,#8b5cf6,#ec4899,#ff6b35);
+    box-shadow:
+        0 0 70px rgba(139,92,246,.25),
+        0 30px 80px rgba(0,0,0,.55);
+    transform:rotate(-2deg);
+}
+
+.photo-frame img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:30px;
+    display:block;
+    background:#111827;
+}
+
+.photo-note{
+    position:absolute;
+    right:0;
+    bottom:25px;
+    max-width:230px;
+    padding:15px 18px;
+    border-radius:18px;
+    background:rgba(11,15,25,.92);
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(12px);
+    box-shadow:0 15px 35px rgba(0,0,0,.45);
+}
+
+.photo-note strong{
+    display:block;
+    color:#fef08a;
+    margin-bottom:4px
+}
+
+.photo-note span{
+    font-size:13px;
+    color:#cbd5e1
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 15px;
+    border-radius:50px;
+    color:#ddd6fe;
+    background:rgba(139,92,246,.14);
+    border:1px solid rgba(167,139,250,.35);
+    font-weight:700;
+    font-size:14px;
+    margin-bottom:20px;
+}
+
+h1{
+    font-size:clamp(42px,6vw,72px);
+    line-height:1.02;
+    letter-spacing:-2px;
+    margin-bottom:18px;
+}
+
+h1 span{
+    background:linear-gradient(135deg,#ff6b35,#fef08a,#ec4899);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero-text{
+    color:#cbd5e1;
+    font-size:18px;
+    line-height:1.8;
+    max-width:650px;
+}
+
+.signature{
+    margin-top:28px;
+    color:#f8fafc;
+    font-size:18px;
+    font-weight:700;
+}
+
+.signature small{
+    display:block;
+    color:#94a3b8;
+    font-size:13px;
+    font-weight:500;
+    margin-top:5px;
+}
+
+.section{
+    padding:80px 0;
+}
+
+.section-title{
+    text-align:center;
+    max-width:760px;
+    margin:0 auto 45px;
+}
+
+.section-title h2{
+    font-size:38px;
+    margin-bottom:12px;
+    background:linear-gradient(135deg,#ff6b35,#fef08a);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.section-title p{
+    color:#94a3b8;
+    line-height:1.7
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+}
+
+.card{
+    padding:32px;
+    border-radius:25px;
+    background:linear-gradient(145deg,rgba(30,41,59,.88),rgba(15,23,42,.88));
+    border:1px solid rgba(255,255,255,.10);
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    right:-50px;
+    top:-50px;
+    border-radius:50%;
+    background:rgba(139,92,246,.20);
+    filter:blur(5px);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(236,72,153,.55);
+    box-shadow:0 25px 55px rgba(0,0,0,.35);
+}
+
+.icon{
+    width:58px;
+    height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:16px;
+    font-size:24px;
+    color:#fff;
+    background:linear-gradient(135deg,#8b5cf6,#ec4899);
+    margin-bottom:20px;
+}
+
+.card h3{
+    font-size:21px;
+    margin-bottom:12px
+}
+
+.card p{
+    color:#94a3b8;
+    line-height:1.75;
+    font-size:15px
+}
+
+.quote{
+    margin:10px auto 0;
+    max-width:950px;
+    padding:42px;
+    text-align:center;
+    border-radius:28px;
+    background:linear-gradient(135deg,rgba(139,92,246,.13),rgba(236,72,153,.10));
+    border:1px solid rgba(255,255,255,.10);
+}
+
+.quote i{
+    font-size:28px;
+    color:#f59e0b;
+    margin-bottom:18px
+}
+
+.quote p{
+    font-size:24px;
+    line-height:1.55;
+    font-weight:700
+}
+
+.quote span{
+    display:block;
+    margin-top:18px;
+    color:#94a3b8;
+    font-size:14px
+}
+
+.timeline{
+    max-width:900px;
+    margin:auto;
+    display:grid;
+    gap:18px;
+}
+
+.step{
+    display:grid;
+    grid-template-columns:70px 1fr;
+    gap:20px;
+    align-items:start;
+    padding:25px;
+    background:rgba(15,23,42,.72);
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:20px;
+}
+
+.number{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    background:linear-gradient(135deg,#ff6b35,#ec4899);
+}
+
+.step h3{
+    margin:3px 0 7px
+}
+
+.step p{
+    color:#94a3b8;
+    line-height:1.65
+}
+
+footer{
+    text-align:center;
+    padding:30px 20px;
+    color:#64748b;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+footer strong{
+    color:#fff
+}
+
+@media(max-width:850px){
+    .hero{
+        grid-template-columns:1fr;
+        text-align:center;
+        padding:50px 0
+    }
+
+    .hero-text{
+        margin:auto
+    }
+
+    .photo-note{
+        right:5%
+    }
+
+    .cards{
+        grid-template-columns:1fr
+    }
+
+    .navbar{
+        padding:15px 20px
+    }
+
+    .logo{
+        font-size:23px
+    }
+}
+
+@media(max-width:520px){
+    .photo-frame{
+        height:400px
+    }
+
+    .photo-note{
+        position:relative;
+        right:auto;
+        bottom:auto;
+        margin-top:-40px
+    }
+
+    .photo-area{
+        flex-direction:column;
+        align-items:center
+    }
+
+    .quote{
+        padding:28px 20px
+    }
+
+    .quote p{
+        font-size:19px
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a class="logo" href="/">
+        <i class="fas fa-utensils"></i> Scan2Dine
+    </a>
+
+    <a class="back" href="/">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+    <div class="photo-area">
+
+        <div class="photo-frame">
+            <img src="/static/creator.jpeg"
+                 alt="Photo of the Scan2Dine creator">
+        </div>
+
+        <div class="photo-note">
+            <strong>
+                <i class="fas fa-sparkles"></i> DHARSHAN P,XII-C
+            </strong>
+
+            <span>
+                SENTHIL PUBLIC SCHOOL,ADHIYAMANKOTTAI
+            </span>
+        </div>
+
+    </div>
+
+    <div>
+
+        <div class="badge">
+            <i class="fas fa-user-astronaut"></i>
+            THE PERSON BEHIND SCAN2DINE
+        </div>
+
+        <h1>Meet the <span>Creator</span></h1>
+
+        <p class="hero-text">
+            Welcome to the creative side of Scan2Dine — where technology meets hospitality.
+            This project was imagined to make restaurant ordering faster, cleaner, smarter,
+            and more enjoyable for both customers and restaurant teams.
+        </p>
+
+        <p class="hero-text" style="margin-top:16px">
+            Scan2Dine is more than a QR ordering system. It is a vision of how a small
+            interaction — scanning a table QR code — can connect the customer, kitchen,
+            waiter, billing, and restaurant management into one seamless experience.
+        </p>
+
+        <div class="signature">
+            — The Creator of Scan2Dine
+            <small>Dream it • Design it • Build it • Improve it</small>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>What Inspired the Idea?</h2>
+
+        <p>
+            Every great project starts with a problem worth solving. These are the ideas
+            that shaped the Scan2Dine journey.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fas fa-qrcode"></i>
+            </div>
+
+            <h3>From Scan to Experience</h3>
+
+            <p>
+                A QR code should not feel like just a shortcut to a menu.
+                It can become the first step of a complete digital dining journey.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+
+            <h3>Technology with Purpose</h3>
+
+            <p>
+                The goal is not to add technology for the sake of technology,
+                but to use it where it genuinely removes friction from dining.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fas fa-heart"></i>
+            </div>
+
+            <h3>Designed Around People</h3>
+
+            <p>
+                Customers want simplicity. Restaurant teams want clarity.
+                Scan2Dine brings both needs together in one connected experience.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>The Scan2Dine Mindset</h2>
+
+        <p>
+            A few principles behind the project.
+        </p>
+
+    </div>
+
+    <div class="timeline">
+
+        <div class="step">
+
+            <div class="number">01</div>
+
+            <div>
+
+                <h3>Make it Simple</h3>
+
+                <p>
+                    Customers should be able to understand the system immediately
+                    without needing an app or complicated instructions.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="step">
+
+            <div class="number">02</div>
+
+            <div>
+
+                <h3>Make it Connected</h3>
+
+                <p>
+                    Ordering, kitchen preparation, table tracking, feedback,
+                    announcements, and billing should work as one system.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="step">
+
+            <div class="number">03</div>
+
+            <div>
+
+                <h3>Make it Better Every Day</h3>
+
+                <p>
+                    Scan2Dine is designed as an evolving idea — every new feature
+                    is an opportunity to make the dining experience smarter.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <div class="quote">
+
+        <i class="fas fa-quote-left"></i>
+
+        <p>
+            “The best technology is the kind that quietly makes people's lives easier.”
+        </p>
+
+        <span>
+            — Scan2Dine Creator's Note
+        </span>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>What's Next?</h2>
+
+        <p>
+            The creator's journey does not end with the first version.
+            Scan2Dine can continue growing into a complete smart-restaurant ecosystem.
+        </p>
+
+    </div>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fas fa-mobile-screen-button"></i>
+            </div>
+
+            <h3>Smarter Customer Journeys</h3>
+
+            <p>
+                Personalized menus, faster reordering, intelligent recommendations,
+                and smoother digital interactions.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+
+            <h3>Powerful Restaurant Insights</h3>
+
+            <p>
+                Use ordering patterns and feedback to help restaurants understand
+                what customers really want.
+            </p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="icon">
+                <i class="fas fa-rocket"></i>
+            </div>
+
+            <h3>Built to Scale</h3>
+
+            <p>
+                A project that can grow from a college or prototype idea into
+                a real-world hospitality technology platform.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    Crafted for <strong>Scan2Dine</strong> · From an idea to an experience · 2026
+</footer>
+
+</body>
+</html>
